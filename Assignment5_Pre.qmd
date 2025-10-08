@@ -1,0 +1,86 @@
+---
+title: "Assignment5"
+editor: 
+  render-on-save: true
+author: "Lucy Liu"
+date: "10/07/2025"
+format:
+  revealjs:
+    theme: solarized
+    transition: fade
+    slide-number: true
+    toc: true
+bibliography: reference.bib
+---
+
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+wdi = pd.read_csv("wdi.csv")
+```
+
+# Data Exploration
+```{python}
+# Calculate average inflation rate
+avg_inflation = wdi['inflation_rate'].mean()
+print("The average inflation rate is:", avg_inflation)
+
+# Calculate average GDP growth
+avg_gdp_growth = wdi['gdp_growth_rate'].mean()
+print("The average GDP growth rate is:", avg_gdp_growth)
+
+# Measure the highest unemployment rate
+max_unemployment = wdi['unemployment_rate'].max()
+print("The highest unemployment rate is:", max_unemployment)
+```
+
+# Visualization
+## Top 10 Countries by GDP Growth Rate {transition="convex"}
+```{python}
+#| fig-width: 6
+#| fig-height: 4
+#| fig-align: center
+#| echo: false
+#| fig-cap: "Top 10 Countries by GDP Growth Rate. Source: [@worldbank]"
+#| label: fig-1
+
+top_gdp = wdi.sort_values(by='gdp_growth_rate', ascending=False).head(10)
+plt.figure()
+plt.bar(top_gdp['country'], top_gdp['gdp_growth_rate'], color='skyblue')
+plt.title('Top 10 Countries by GDP Growth Rate')
+plt.xticks(fontsize=6, rotation=45)
+plt.xlabel('Country')
+plt.ylabel('GDP Growth Rate (%)')
+plt.show()
+```
+## Inflation Rate vs Unemployment Rate {transition='fade'}
+```{python}
+#| fig-width: 4
+#| fig-height: 3
+#| fig-align: center
+#| echo: false
+#| fig-cap: "Inflation Rate vs Unemployment Rate: [@worldbank]"
+#| label: fig-2
+#| fig-env: figure
+#| fig-pos: H
+# Scatter plot of inflation rate vs unemployment rate
+plt.figure()
+plt.scatter(wdi['inflation_rate'], wdi['unemployment_rate'], alpha=0.5,color = 'orange')
+plt.title('Inflation Rate vs Unemployment Rate')
+plt.xlabel('Inflation Rate (%)')
+plt.ylabel('Unemployment Rate (%)')
+plt.show()
+
+```
+# Key Statistics Table
+
+| Country  | GDP Growth Rate | Inflation Rate | Unemployment Rate |
+|----------|-----------------|----------------|-------------------|
+| Guyana   | 63.33           | 6.16           | 12.01             |
+| St.Lucia | 20.39           | 6.38           | 15.93             |
+| Fiji     | 19.79           | 4.32           | 4.45              |
+
+
+
+
+As shown in Figure @fig-1, the countries has the highest GDP Growth rate is Guyana. Additionally, Figure @fig-2 illustrates the relationship between inflation rate and unemployment rate. It doesn't show a clear trend between the two indicators. 
